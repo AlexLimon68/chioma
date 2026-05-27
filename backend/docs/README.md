@@ -87,6 +87,7 @@ The API will be available at `http://localhost:5000/api` and Swagger UI at `http
 | -------------------------------------------------------------------------- | --------------------------------------------- |
 | [Dependency Graph](./architecture/DEPENDENCY_GRAPH.md)                     | Module dependency overview                    |
 | [Architecture Documentation](./architecture/ARCHITECTURE_DOCUMENTATION.md) | System architecture, layers, integrations     |
+| [Architecture Decisions](./architecture/ARCHITECTURE_DECISIONS.md)         | Key decisions, rationale, trade-offs          |
 | [Scalability & Performance](./architecture/scalability-and-performance.md) | Horizontal scaling, caching layers, DB tuning |
 
 **Key design decisions:**
@@ -241,11 +242,32 @@ Security features active in every request:
 
 ---
 
+## Configuration
+
+| Document                                                          | Summary                                                     |
+| ----------------------------------------------------------------- | ----------------------------------------------------------- |
+| [Configuration Management](./CONFIGURATION_MANAGEMENT.md)         | Environment setup, validation, secrets, deployment          |
+| [Configuration Options](./CONFIGURATION_OPTIONS.md)               | Complete reference of all environment variables             |
+
+---
+
+## Troubleshooting
+
+| Document                                            | Summary                                                             |
+| --------------------------------------------------- | ------------------------------------------------------------------- |
+| [Troubleshooting Guide](./TROUBLESHOOTING.md)       | Common issues by area, error codes, resolution steps                |
+| [Error Handling](./ERROR_HANDLING.md)               | Exception filters, custom errors, frontend classification           |
+| [Caching Troubleshooting](./caching/troubleshooting.md) | Cache-specific issues                                         |
+
+---
+
 ## Incident Response
 
-| Document                                               | Summary                                                             |
-| ------------------------------------------------------ | ------------------------------------------------------------------- |
-| [Incident Response Procedures](./INCIDENT_RESPONSE.md) | Classification, detection, escalation, communication, runbooks, PIR |
+| Document                                                               | Summary                                                             |
+| ---------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| [Incident Response Procedures](./INCIDENT_RESPONSE.md)                 | Classification, detection, escalation, communication, runbooks, PIR |
+| [Disaster Recovery Plan](./deployment/DISASTER_RECOVERY_PLAN.md)       | Full platform outage and DR scenarios                               |
+| [Disaster Recovery Procedures](./deployment/runbooks/DISASTER_RECOVERY_PROCEDURES.md) | Step-by-step recovery runbooks                          |
 
 ---
 
