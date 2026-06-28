@@ -101,6 +101,19 @@ export default function UserDashboardOverview() {
   const apiPayments = paymentsData?.data ?? [];
 
   const activeAgreement = apiAgreements.find((a) => a.status === 'active') ?? null;
+
+  const leaseStart = activeAgreement?.startDate ? new Date(activeAgreement.startDate) : null;
+  const leaseEnd = activeAgreement?.endDate ? new Date(activeAgreement.endDate) : null;
+  const leaseMonthsTotal = leaseStart && leaseEnd
+    ? Math.round((leaseEnd.getTime() - leaseStart.getTime()) / (1000 * 60 * 60 * 24 * 30.44))
+    : 12;
+  const leaseMonthsElapsed = leaseStart
+    ? Math.max(0, Math.round((Date.now() - leaseStart.getTime()) / (1000 * 60 * 60 * 24 * 30.44)))
+    : 5;
+  const leaseMonthsRemaining = Math.max(0, leaseMonthsTotal - leaseMonthsElapsed);
+  const leaseProgressPct = leaseMonthsTotal > 0
+    ? Math.min(100, Math.round((leaseMonthsElapsed / leaseMonthsTotal) * 100))
+    : 60;
   const nextPaymentAmount = activeAgreement?.monthlyRent
     ? `${activeAgreement.monthlyRent.toLocaleString()}`
     : mockAgreements[0].amount;
