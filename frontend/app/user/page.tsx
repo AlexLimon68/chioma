@@ -17,6 +17,7 @@ import { AreaChart, Area, ResponsiveContainer, XAxis, Tooltip } from 'recharts';
 import { MicroCharts } from '@/components/dashboard/MicroCharts';
 import { TenantOnboardingBanner } from '@/components/user/TenantOnboardingBanner';
 import { useAuth } from '@/store/authStore';
+import { useRoleRedirect } from '@/hooks/useRoleRedirect';
 import { useUserAgreements } from '@/lib/query/hooks/use-agreements';
 import { useModal } from '@/contexts/ModalContext';
 import { apiClient } from '@/lib/api-client';
@@ -89,8 +90,7 @@ const dashboardDisputes = [
 ];
 
 export default function UserDashboardOverview() {
-  // AUTH DISABLED - useRoleRedirect commented out for development
-  // useRoleRedirect(['user']);
+  useRoleRedirect(['user', 'admin']);
 
   const { openModal } = useModal();
   const router = useRouter();
