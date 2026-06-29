@@ -195,7 +195,7 @@ class AnalyticsDataExportService {
             const value = row[field];
             return typeof value === 'string'
               ? `"${String(value).replace(/"/g, '""')}"`
-              : String(value ?? '');
+              : String(value ?? null);
           })
           .join(','),
       );
