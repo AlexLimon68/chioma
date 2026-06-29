@@ -12,6 +12,10 @@ import {
   withRetry,
 } from '@/lib/errors';
 import { getMockData, shouldUseMockApi } from '@/lib/mock-api';
+import {
+  cancellationManager,
+  isCancellationError,
+} from '@/lib/cancellation/manager';
 
 type RequestConfig = {
   method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
@@ -21,6 +25,7 @@ type RequestConfig = {
   retries?: number;
   timeoutMs?: number;
   signal?: AbortSignal;
+  cancellationKey?: string;
 };
 
 type ApiResponse<T> = {
@@ -109,6 +114,7 @@ class ApiClient {
       retries = 3,
       timeoutMs = 12000,
       signal,
+      cancellationKey,
     } = config;
 
     const token = this.getAuthToken();
@@ -128,6 +134,15 @@ class ApiClient {
         if (signal) {
           if (signal.aborted) controller.abort();
           signal.addEventListener('abort', () => controller.abort(), {
+            once: true,
+          });
+        }
+
+        if (cancellationKey) {
+          const cancelSignal =
+            cancellationManager.createSignal(cancellationKey).signal;
+          if (cancelSignal.aborted) controller.abort();
+          cancelSignal.addEventListener('abort', () => controller.abort(), {
             once: true,
           });
         }
@@ -171,6 +186,14 @@ class ApiClient {
                 : undefined,
           };
         } catch (error) {
+          if (isCancellationError(error)) {
+            clearTimeout(timeoutId);
+            throw cancellationManager.classifyCancellationError(
+              error,
+              'lib/api-client.ts',
+            );
+          }
+
           const appError = classifyUnknownError(error, {
             source: 'lib/api-client.ts',
             action: `${method} ${endpoint}`,
@@ -185,6 +208,8 @@ class ApiClient {
       {
         maxAttempts: retries,
         shouldRetry: (error) => {
+          if (isCancellationError(error)) return false;
+
           const appError = classifyUnknownError(error, {
             source: 'lib/api-client.ts',
             action: `retry-check ${method} ${endpoint}`,
