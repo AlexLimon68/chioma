@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { apiClient } from '@/lib/api-client';
-import { queryKeys } from '../keys';
-import type { PaginatedResponse, Property } from '@/types';
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { apiClient } from "@/lib/api-client";
+import { queryKeys } from "../keys";
+import type { PaginatedResponse, Property } from "@/types";
 
 export interface FavoriteItem {
   id?: string;
@@ -27,7 +27,7 @@ export function useFavorites() {
   return useQuery({
     queryKey: queryKeys.favorites.list(),
     queryFn: async () => {
-      const { data } = await apiClient.get<FavoritesResponse>('/favorites');
+      const { data } = await apiClient.get<FavoritesResponse>("/favorites");
       return normalizeFavorites(data);
     },
     staleTime: 30_000,
@@ -35,7 +35,7 @@ export function useFavorites() {
 }
 
 export function useFavoriteStatus(propertyId: string | number | null) {
-  const id = propertyId ? String(propertyId) : '';
+  const id = propertyId ? String(propertyId) : "";
 
   return useQuery({
     queryKey: queryKeys.favorites.status(id),
@@ -49,7 +49,7 @@ export function useFavoriteStatus(propertyId: string | number | null) {
 }
 
 export function useFavoriteCount(propertyId: string | number | null) {
-  const id = propertyId ? String(propertyId) : '';
+  const id = propertyId ? String(propertyId) : "";
 
   return useQuery({
     queryKey: queryKeys.favorites.count(id),
@@ -69,7 +69,7 @@ export function useAddFavorite() {
 
   return useMutation({
     mutationFn: async (propertyId: string) => {
-      const { data } = await apiClient.post<FavoriteItem>('/favorites', {
+      const { data } = await apiClient.post<FavoriteItem>("/favorites", {
         propertyId,
       });
       return data;
@@ -84,7 +84,8 @@ export function useAddFavorite() {
         queryKeys.favorites.status(propertyId),
         (old) => ({
           isFavorited: true,
-          favoriteCount: old?.favoriteCount ?? previousStatus?.favoriteCount ?? 0,
+          favoriteCount:
+            old?.favoriteCount ?? previousStatus?.favoriteCount ?? 0,
         }),
       );
 
@@ -132,8 +133,9 @@ export function useRemoveFavorite() {
           favoriteCount: Math.max(0, old?.favoriteCount ?? 0),
         }),
       );
-      queryClient.setQueryData<FavoriteItem[]>(queryKeys.favorites.list(), (old) =>
-        old?.filter((favorite) => favorite.propertyId !== propertyId),
+      queryClient.setQueryData<FavoriteItem[]>(
+        queryKeys.favorites.list(),
+        (old) => old?.filter((favorite) => favorite.propertyId !== propertyId),
       );
 
       return { previousStatus, previousList };
@@ -143,7 +145,10 @@ export function useRemoveFavorite() {
         queryKeys.favorites.status(propertyId),
         context?.previousStatus,
       );
-      queryClient.setQueryData(queryKeys.favorites.list(), context?.previousList);
+      queryClient.setQueryData(
+        queryKeys.favorites.list(),
+        context?.previousList,
+      );
     },
     onSettled: (_data, _err, propertyId) => {
       queryClient.invalidateQueries({ queryKey: queryKeys.favorites.all });
