@@ -29,7 +29,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav
+    <header
       className={`top-0 left-0 right-0 z-50 transition-all duration-300 sticky ${
         isScrolled
           ? 'bg-white/90 backdrop-blur-xl border-b border-gray-200 py-3 shadow-sm'
@@ -45,7 +45,10 @@ const Navbar = () => {
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center space-x-10">
+        <nav
+          aria-label="Main Navigation"
+          className="hidden md:flex items-center space-x-10"
+        >
           {navLinks.map((link) => {
             const active = isActive(link.href);
 
@@ -62,20 +65,20 @@ const Navbar = () => {
                 `}
               >
                 {link.name}
-                {/* Active Indicator Line */}
                 {active && (
                   <span className="absolute -bottom-1.5 left-0 w-full h-[2px] bg-brand-blue rounded-full" />
                 )}
               </Link>
             );
           })}
-        </div>
+        </nav>
 
-        {/* Mobile Menu Button - visible on light nav (text-blue-900), min touch target */}
+        {/* Mobile Menu Button */}
         <button
           className="md:hidden text-blue-900 p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center -mr-1 rounded-lg active:bg-blue-900/10"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           aria-label="Toggle menu"
+          aria-expanded={isMobileMenuOpen}
         >
           {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
@@ -83,7 +86,10 @@ const Navbar = () => {
 
       {/* Mobile Navigation Drawer */}
       {isMobileMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 right-0 bg-slate-900/95 backdrop-blur border-t border-white/10 animate-in fade-in slide-in-from-top-4 duration-300">
+        <nav
+          aria-label="Mobile Navigation"
+          className="md:hidden absolute top-full left-0 right-0 bg-slate-900/95 backdrop-blur border-t border-white/10 animate-in fade-in slide-in-from-top-4 duration-300"
+        >
           <div className="flex flex-col p-6 space-y-4">
             {navLinks.map((link) => {
               const active = isActive(link.href);
@@ -106,9 +112,9 @@ const Navbar = () => {
               );
             })}
           </div>
-        </div>
+        </nav>
       )}
-    </nav>
+    </header>
   );
 };
 

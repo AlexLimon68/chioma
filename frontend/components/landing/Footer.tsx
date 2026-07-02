@@ -71,73 +71,26 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Platform Links */}
-          <div>
-            <h3 className="text-white font-semibold mb-4">Platform</h3>
-            <ul className="space-y-3">
-              {footerLinks.platform.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    href={link.href}
-                    className="text-blue-200/70 hover:text-white text-sm transition-colors"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Company Links */}
-          <div>
-            <h3 className="text-white font-semibold mb-4">Company</h3>
-            <ul className="space-y-3">
-              {footerLinks.company.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    href={link.href}
-                    className="text-blue-200/70 hover:text-white text-sm transition-colors"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Resources Links */}
-          <div>
-            <h3 className="text-white font-semibold mb-4">Resources</h3>
-            <ul className="space-y-3">
-              {footerLinks.resources.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    href={link.href}
-                    className="text-blue-200/70 hover:text-white text-sm transition-colors"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Legal Links */}
-          <div>
-            <h3 className="text-white font-semibold mb-4">Legal</h3>
-            <ul className="space-y-3">
-              {footerLinks.legal.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    href={link.href}
-                    className="text-blue-200/70 hover:text-white text-sm transition-colors"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {/* Links Sections */}
+          {Object.entries(footerLinks).map(([category, links]) => (
+            <div key={category}>
+              <h3 className="text-white font-semibold mb-4 capitalize">
+                {category}
+              </h3>
+              <ul className="space-y-3">
+                {links.map((link) => (
+                  <li key={link.name}>
+                    <Link
+                      href={link.href}
+                      className="text-blue-200/70 hover:text-white text-sm transition-colors"
+                    >
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
 
         {/* Bottom Bar */}

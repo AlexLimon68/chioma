@@ -12,8 +12,12 @@ export const dynamic = 'force-dynamic';
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
+    // Cambiado de <main> a <div> para respetar el layout raíz
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
+      {/* Queda afuera del flujo principal para que el skip link lo pueda saltar */}
       <Navbar />
+
+      {/* Componentes internos que componen el {children} */}
       <Hero />
       <Stats />
       <Features />
@@ -22,6 +26,6 @@ export default function Home() {
       <Testimonials />
       <CTA />
       <Footer />
-    </main>
+    </div>
   );
 }

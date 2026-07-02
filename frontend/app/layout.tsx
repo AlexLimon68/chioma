@@ -1,32 +1,12 @@
-import type { Metadata, Viewport } from 'next';
-import './globals.css';
-
-import '@fontsource-variable/inter';
-
-export const viewport: Viewport = {
-  themeColor: '#1d4ed8',
-  colorScheme: 'dark',
-  width: 'device-width',
-  initialScale: 1,
-  maximumScale: 5,
-  userScalable: true,
-  viewportFit: 'cover',
-};
+import type { Metadata } from 'next';
+//import '@fontsource-variable/inter'; // Tu importación corregida de la fuente
+import './globals.css'; // Tus estilos globales de Tailwind
+import { RootLayoutClient } from './RootLayoutClient';
 
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_APP_URL || 'https://chioma-kappa.vercel.app',
-  ),
-  title: {
-    default: 'Chioma — Blockchain-Powered Rentals',
-    template: '%s | Chioma',
-  },
-  description:
-    'Automated commissions, zero disputes. Connect with landlords and tenants on the Stellar network.',
-  manifest: '/manifest.webmanifest',
+  title: 'Chioma — Blockchain-Powered Real Estate',
+  description: 'Automated Commissions. Zero Disputes.',
 };
-
-import { RootLayoutClient } from './RootLayoutClient';
 
 export default function RootLayout({
   children,
@@ -34,20 +14,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        <link rel="dns-prefetch" href="https://images.unsplash.com" />
-      </head>
-
-      <body
-        suppressHydrationWarning
-        className="font-sans bg-linear-to-br from-slate-900 via-blue-900 to-slate-900"
-      >
-        {/* Accessibility: skip link */}
-        <a href="#main-content" className="skip-link">
-          Skip to main content
-        </a>
-
+    <html lang="en">
+      <body>
+        {/* Pasamos todo el árbol al cliente que ya acomoda el Skip Link y el <main> */}
         <RootLayoutClient>{children}</RootLayoutClient>
       </body>
     </html>

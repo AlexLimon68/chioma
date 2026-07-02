@@ -90,12 +90,16 @@ export default function Hero() {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4"
           >
-            <Link
-              href="#how-it-works"
-              className="w-full sm:w-auto bg-white/10 backdrop-blur-sm border border-white/20 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white/20 transition-all duration-200"
+            <button
+              onClick={() => {
+                document
+                  .getElementById('how-it-works')
+                  ?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="w-full sm:w-auto bg-white/10 backdrop-blur-sm border border-white/20 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white/20 transition-all duration-200 cursor-pointer"
             >
               See How It Works
-            </Link>
+            </button>
           </motion.div>
 
           {/* Search Bar */}
